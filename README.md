@@ -14,7 +14,8 @@ It is built with Golang-Gorilla mux and Protobuf.
 1. Protobuf - libprotoc 25.3
 
 # FAQ
-1. How to install Protocol Buffers? 
+1.
+2. How to install Protocol Buffers? 
     * HomeBrew : brew install protobuf-c (my preference)
     * Dev : https://protobuf.dev/
-2. 
+3. Install grpc : go get -u github.com/grpc/grpc-go
