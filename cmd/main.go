@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/spf13/viper"
+	"weather-conditions/server"
 
 	"weather-conditions/props"
 )
@@ -23,7 +24,11 @@ func startApplication() {
 
 func startServer() {
 	providers := getProviders(properties)
-	weatherConditionDomainHandler := NewWestherConditionDomainHandler(providers, properties)
-	server := NewWeatherServer(prop, properties)
-	server.ConfigureApi(weatherConditionDomainHandler)
+	weatherConditionDomainHandler := NewWeatherConditionDomainHandler(providers, properties)
+	servers := server.NewWeatherServer(properties, prop)
+	servers.ConfigureAPI(weatherConditionDomainHandler)
+}
+
+func getProviders(properties *viper.Viper) {
+
 }
