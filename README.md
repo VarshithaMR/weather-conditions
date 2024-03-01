@@ -21,3 +21,4 @@ It is built with Golang-Gorilla mux and Protobuf.
 4. Install grpc (Protobuf compiler plugin for gRPC-go) : go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2
 5. Setup protoc in PATH :  export PATH="$PATH:$(go env GOPATH)/bin"
 6. Refer : https://grpc.io/docs/languages/go/quickstart/
+7. How to generate proto files? in weather-conditions repo, run "protoc --go_out=. --go-grpc_out=. proto/weather-condition-protobuf.proto"

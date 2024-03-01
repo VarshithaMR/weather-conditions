@@ -9,3 +9,5 @@
 
 #ignore changes to .idea
 .idea
+
+.DS_store

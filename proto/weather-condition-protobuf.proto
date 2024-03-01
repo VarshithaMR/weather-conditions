@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package weathercondition;
+
+option go_package = "/proto/generated";
+
+message WeatherRequest {
+  string location = 1;
+}
+
+message WeatherResponse {
+  float temperature = 1;
+  string timezone = 2;
+
+}
+service WeatherConditionService {
+  rpc GetWeather(WeatherRequest) returns (WeatherResponse);
+}
