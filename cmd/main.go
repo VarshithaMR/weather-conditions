@@ -26,7 +26,7 @@ func startServer() {
 	providers := getProviders(properties)
 	weatherConditionDomainHandler := NewWeatherConditionDomainHandler(providers, properties)
 	servers := server.NewWeatherServer(properties, prop)
-	servers.ConfigureAPI(weatherConditionDomainHandler)
+	//servers.ConfigureAPI(weatherConditionDomainHandler)
 }
 
 func getProviders(properties *viper.Viper) {

@@ -12,7 +12,7 @@ It is built with Golang-Gorilla mux and Protobuf.
 
 # Highlights
 1. Protobuf - libprotoc 25.3
-
+2. gRPC Reverse Proxy
 # FAQ
 1. Install Go - brew install golang
 2. Protobuf compiler Installation - brew install protobuf
@@ -22,3 +22,5 @@ It is built with Golang-Gorilla mux and Protobuf.
 5. Setup protoc in PATH :  export PATH="$PATH:$(go env GOPATH)/bin"
 6. Refer : https://grpc.io/docs/languages/go/quickstart/
 7. How to generate proto files? in weather-conditions repo, run "protoc --go_out=. --go-grpc_out=. proto/weather-condition-protobuf.proto"
+8. Install gRPC-gateway to generate reverse proxy : go install github.com/grpc-ecosystem/grpc-gateway/protoc-gen-grpc-gateway@v1.16.0
+9. Install gRPC-gateway for openAPI to generate reverse proxy : go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@v2.19.1

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package openmateo;
+
+import "google/api/annotations.proto";
+
+service OpenMateoService {
+  rpc GetWeatherForecast (WeatherRequest) returns (ForecastResponse) {
+    option (google.api.http) = {
+      post: "/v1/forecast"
+      body: "*"
+    };
+  }
+}
+
+message WeatherRequest {
+  double latitude = 1;
+  double longitude = 2;
+}
+
+message ForecastResponse {
+  // Define the fields of your forecast response here
+}
