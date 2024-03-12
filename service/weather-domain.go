@@ -2,11 +2,12 @@ package service
 
 import (
 	"context"
+
 	"github.com/pkg/errors"
-	"weather-conditions/service/providers/heremaps"
-	"weather-conditions/service/providers/openmateo"
 
 	"weather-conditions/proto/generated"
+	"weather-conditions/service/providers/heremaps"
+	"weather-conditions/service/providers/openmateo"
 )
 
 type Providers struct {
@@ -15,6 +16,7 @@ type Providers struct {
 }
 type WeatherForecastServer struct {
 	providers Providers
+	generated.UnimplementedWeatherConditionServiceServer
 }
 
 func (p *Providers) GetWeather(ctx context.Context, request *generated.WeatherRequest) (*generated.WeatherResponse, error) {
@@ -39,6 +41,8 @@ func (p *Providers) GetWeather(ctx context.Context, request *generated.WeatherRe
 	return openMateoResponse, nil
 }
 
-func NewWeatherDomainHandler() {
-
+func NewWeatherDomainHandler(providers Providers) generated.WeatherConditionServiceServer {
+	return &WeatherForecastServer{
+		providers: providers,
+	}
 }

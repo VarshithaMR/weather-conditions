@@ -2,17 +2,17 @@ package main
 
 import (
 	"fmt"
+	"net"
+
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
-	"net"
+
+	"weather-conditions/props"
 	"weather-conditions/proto/generated"
-	"weather-conditions/server"
 	"weather-conditions/service"
 	"weather-conditions/service/providers/heremaps"
 	"weather-conditions/service/providers/openmateo"
-
-	"weather-conditions/props"
 )
 
 var (
@@ -33,10 +33,15 @@ func startApplication() {
 func startgRPCServer() {
 	// options like credentials, codec, keepalive params if required
 	//opts := getServerOptions()
-	providers := getProviders(properties)
+
+	// create new gRPC server
 	grpcServer := grpc.NewServer()
+
+	//initialise Weather server
 	servers := getWeatherServer()
-	generated.RegisterWeatherConditionServiceServer(grpcServer,servers.weatherServer)
+
+	// register your server
+	generated.RegisterWeatherConditionServiceServer(grpcServer, servers.weatherServer)
 
 	listener, err := net.Listen("tcp", fmt.Sprintf(":%v", prop.Server.Port))
 	if err != nil {
@@ -54,9 +59,11 @@ type weatherServices struct {
 }
 
 func getWeatherServer() weatherServices {
+	//get all external providers
+	providers := getProviders(properties)
 
 	return weatherServices{
-		weatherServer:
+		weatherServer: service.NewWeatherDomainHandler(providers),
 	}
 }
 
@@ -65,7 +72,7 @@ func getProviders(properties *viper.Viper) service.Providers {
 	openMateo := openmateo.NewOpenMateoClient(properties)
 
 	return service.Providers{
-		HereMapsClient: hereMaps,
+		HereMapsClient:  hereMaps,
 		OpenMateoClient: openMateo,
 	}
 }

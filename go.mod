@@ -6,9 +6,9 @@ require (
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/go-resty/resty/v2 v2.11.0
 	github.com/mitchellh/mapstructure v1.5.0
+	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/viper v1.18.2
-	google.golang.org/genproto/googleapis/api v0.0.0-20240228224816-df926f6c8641
 	google.golang.org/grpc v1.62.0
 	google.golang.org/protobuf v1.32.0
 )
