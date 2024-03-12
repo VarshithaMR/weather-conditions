@@ -8,6 +8,12 @@ import (
 	"github.com/spf13/viper"
 )
 
+const (
+	envVarHereMapsUrl    = "HERE_MAPS_URL"
+	envVarHereMapsAPIKey = "HERE_MAPS_APIKEY"
+	envVarOpenMateoUrl   = "OPEN_MATEO_URL"
+)
+
 func initializeApplication() {
 	properties = initializeConfiguration("./env/")
 }
@@ -18,9 +24,10 @@ func initializeConfiguration(path string) *viper.Viper {
 	viperConfigManager.SetConfigType("yaml")
 	viperConfigManager.AddConfigPath("/etc/config/")
 	viperConfigManager.AddConfigPath(path)
-	err := viperConfigManager.BindEnv()
+	err := viperConfigManager.BindEnv(envVarHereMapsUrl, envVarHereMapsAPIKey, envVarOpenMateoUrl)
 	if err != nil {
-		log.Warnf("Failed to bind a configuration key to the '%v , %v' environment variable with error %v", err)
+		log.Warnf("Failed to bind a configuration key to the '%v , %v, %v' environment variable with error %v",
+			envVarHereMapsUrl, envVarHereMapsAPIKey, envVarOpenMateoUrl, err)
 	}
 	viperConfigManager.AutomaticEnv()
 	viperConfigManager.AllowEmptyEnv(true)

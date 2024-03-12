@@ -9,7 +9,7 @@ message WeatherRequest {
 }
 
 message WeatherResponse {
-  float temperature = 1;
+  string temperature = 1;
   string timezone = 2;
 
 }

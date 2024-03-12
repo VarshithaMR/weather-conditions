@@ -5,7 +5,7 @@ import (
 	"github.com/go-resty/resty/v2"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	"weather-conditions/proto/generated"
+	"weather-conditions/service/providers/openmateo/models"
 
 	heremaps "weather-conditions/service/providers/heremaps/models"
 )
@@ -22,28 +22,28 @@ const (
 )
 
 type OpenMateoClient interface {
-	GetWeatherForecast(heremaps.CoordinatesResponse) (*generated.WeatherResponse, error)
+	GetWeatherForecast(heremaps.CoordinatesResponse) (*models.ForecastResponse, error)
 }
 
 type WeatherForecast struct {
 	httClient *resty.Client
 }
 
-func (w *WeatherForecast) GetWeatherForecast(latLon heremaps.CoordinatesResponse) (*generated.WeatherResponse, error) {
+func (w *WeatherForecast) GetWeatherForecast(latLon heremaps.CoordinatesResponse) (*models.ForecastResponse, error) {
 	url := w.httClient.BaseURL + openMateoEndpoint
 	response, err := w.httClient.R().
 		SetHeader(contentType, appType).
 		SetQueryParam(paramCurrent, paramCurrentValue).
-		SetQueryParam(paramLongitude, fmt.Sprintf("%f", latLon.Longitude)).
-		SetQueryParam(paramLatitude, fmt.Sprintf("%f", latLon.Latitude)).
-		SetResult(generated.WeatherResponse{}).
+		SetQueryParam(paramLongitude, fmt.Sprintf("%f", latLon.Items[0].Position.Longitude)).
+		SetQueryParam(paramLatitude, fmt.Sprintf("%f", latLon.Items[0].Position.Latitude)).
+		SetResult(models.ForecastResponse{}).
 		Get(url)
 	if err != nil {
 		log.Warnf("❌ OpenMateo API error: %s", err)
 		return nil, err
 	}
 
-	return response.Result().(*generated.WeatherResponse), nil
+	return response.Result().(*models.ForecastResponse), nil
 }
 
 func NewOpenMateoClient(properties *viper.Viper) OpenMateoClient {

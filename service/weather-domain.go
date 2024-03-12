@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/pkg/errors"
 
@@ -42,7 +43,11 @@ func (w *WeatherForecastServer) GetWeather(ctx context.Context, request *generat
 		return nil, err
 	}
 
-	return openMateoResponse, nil
+	temperature := fmt.Sprintf("%f", openMateoResponse.CurrentValues.Temperature) + " " + openMateoResponse.CurrentUnits.Temperature
+	return &generated.WeatherResponse{
+		Temperature: temperature,
+		Timezone:    openMateoResponse.TimeZone + " " + openMateoResponse.TimeZoneUnit,
+	}, nil
 }
 
 type ServerOption func(*WeatherForecastServer)
