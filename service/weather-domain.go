@@ -14,12 +14,16 @@ type Providers struct {
 	HereMapsClient  heremaps.HereMapsClient
 	OpenMateoClient openmateo.OpenMateoClient
 }
+
 type WeatherForecastServer struct {
 	providers Providers
+	Host      string
+	Path      string
+	Port      int
 	generated.UnimplementedWeatherConditionServiceServer
 }
 
-func (p *Providers) GetWeather(ctx context.Context, request *generated.WeatherRequest) (*generated.WeatherResponse, error) {
+func (w *WeatherForecastServer) GetWeather(ctx context.Context, request *generated.WeatherRequest) (*generated.WeatherResponse, error) {
 	if ctx == nil {
 		return nil, errors.New("weather request context is empty")
 	}
@@ -28,12 +32,12 @@ func (p *Providers) GetWeather(ctx context.Context, request *generated.WeatherRe
 		return nil, errors.New("weather request is empty")
 	}
 
-	hereMapsResponse, err := p.HereMapsClient.GetCoordinates(request.Location)
+	hereMapsResponse, err := w.providers.HereMapsClient.GetCoordinates(request.Location)
 	if err != nil {
 		return nil, err
 	}
 
-	openMateoResponse, err := p.OpenMateoClient.GetWeatherForecast(*hereMapsResponse)
+	openMateoResponse, err := w.providers.OpenMateoClient.GetWeatherForecast(*hereMapsResponse)
 	if err != nil {
 		return nil, err
 	}
@@ -41,8 +45,35 @@ func (p *Providers) GetWeather(ctx context.Context, request *generated.WeatherRe
 	return openMateoResponse, nil
 }
 
-func NewWeatherDomainHandler(providers Providers) generated.WeatherConditionServiceServer {
-	return &WeatherForecastServer{
+type ServerOption func(*WeatherForecastServer)
+
+func NewWeatherDomainHandler(providers Providers, options ...ServerOption) generated.WeatherConditionServiceServer {
+	weatherServer := &WeatherForecastServer{
 		providers: providers,
+	}
+
+	for _, option := range options {
+		if option != nil {
+			option(weatherServer)
+		}
+	}
+	return weatherServer
+}
+
+func WithHost(host string) ServerOption {
+	return func(w *WeatherForecastServer) {
+		w.Host = host
+	}
+}
+
+func WithPort(port int) ServerOption {
+	return func(w *WeatherForecastServer) {
+		w.Port = port
+	}
+}
+
+func WithPath(path string) ServerOption {
+	return func(w *WeatherForecastServer) {
+		w.Path = path
 	}
 }

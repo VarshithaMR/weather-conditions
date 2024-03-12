@@ -36,14 +36,15 @@ func startgRPCServer() {
 
 	// create new gRPC server
 	grpcServer := grpc.NewServer()
+	serverConfig := props.NewServer(properties, prop)
 
 	//initialise Weather server
-	servers := getWeatherServer()
+	servers := getWeatherServer(serverConfig)
 
 	// register your server
 	generated.RegisterWeatherConditionServiceServer(grpcServer, servers.weatherServer)
 
-	listener, err := net.Listen("tcp", fmt.Sprintf(":%v", prop.Server.Port))
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%v", serverConfig.Port))
 	if err != nil {
 		log.Fatalf("failed to listen: %s", err)
 	}
@@ -58,12 +59,15 @@ type weatherServices struct {
 	weatherServer generated.WeatherConditionServiceServer
 }
 
-func getWeatherServer() weatherServices {
+func getWeatherServer(serverConfig *props.Server) weatherServices {
 	//get all external providers
 	providers := getProviders(properties)
 
 	return weatherServices{
-		weatherServer: service.NewWeatherDomainHandler(providers),
+		weatherServer: service.NewWeatherDomainHandler(providers,
+			service.WithHost(serverConfig.Host),
+			service.WithPort(serverConfig.Port),
+			service.WithPath(serverConfig.ContextRoot)),
 	}
 }
 

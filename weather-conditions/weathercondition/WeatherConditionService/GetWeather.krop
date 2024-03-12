@@ -1,0 +1,13 @@
+{
+  "details": {
+    "methodFqn": "weathercondition.WeatherConditionService.GetWeather"
+  },
+  "requests": [
+    {
+      "location": "GetWeather-request.json"
+    }
+  ],
+  "operationType": "unary",
+  "invokerName": "grpc",
+  "importStreamId": "8558f925-494a-45c9-9303-a87bc1e0ae47"
+}
