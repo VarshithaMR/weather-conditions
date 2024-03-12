@@ -44,10 +44,13 @@ func (w *WeatherForecastServer) GetWeather(ctx context.Context, request *generat
 	}
 
 	temperature := fmt.Sprintf("%f", openMateoResponse.CurrentValues.Temperature) + " " + openMateoResponse.CurrentUnits.Temperature
-	return &generated.WeatherResponse{
+	timezone := openMateoResponse.TimeZone + " " + openMateoResponse.TimeZoneUnit
+	x := &generated.WeatherResponse{
 		Temperature: temperature,
-		Timezone:    openMateoResponse.TimeZone + " " + openMateoResponse.TimeZoneUnit,
-	}, nil
+		Timezone:    timezone,
+	}
+
+	return x, nil
 }
 
 type ServerOption func(*WeatherForecastServer)
