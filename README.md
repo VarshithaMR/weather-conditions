@@ -1,12 +1,11 @@
 # Introductions
 This microservice calls weather api and gives the weather conditions of a particular place.
-It is built with Golang-Gorilla mux and Protobuf.
+It is built with Golang-gRPC and Protobuf. Its providers are requested using REST-Json.
 (Exploring proto-buffers with simple microservice)
 
 # Tech
 * goversion : 1.22.0
 * OS - macOs
-* framework - Gorilla mux
 * provider : weather api
 * IDE : IntelliJ IDEA
 

@@ -18,6 +18,27 @@ const (
 	hereEndpoint         = "/v1/geocode"
 )
 
+/*type HereMapsServiceServer struct {
+	generated.UnimplementedHereMapsServiceServer
+}
+
+type HereMapsServiceServerOption func(*HereMapsServiceServer)
+
+func NewHereMapsClient(options ...HereMapsServiceServerOption) generated.HereMapsServiceServer {
+	server := &HereMapsServiceServer{}
+	for _, option := range options {
+		if option != nil {
+			option(server)
+		}
+	}
+
+	return server
+}
+
+func (h *HereMapsServiceServer) GetCoordinates(ctx context.Context, request *generated.HereMapsRequest) (*generated.CoordinatesResponse, error) {
+
+} */
+
 type HereMapsClient interface {
 	GetCoordinates(string) (*models.CoordinatesResponse, error)
 }
