@@ -1,8 +1,8 @@
 package models
 
 type ForecastResponse struct {
-	TimeZone      string         `json:"timezone"`
 	TimeZoneUnit  string         `json:"timezone_abbreviation"`
+	TimeZone      string         `json:"timezone"`
 	CurrentUnits  *CurrentUnits  `json:"current_units,omitempty"`
 	CurrentValues *CurrentValues `json:"current,omitempty"`
 }

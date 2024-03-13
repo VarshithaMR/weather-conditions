@@ -12,6 +12,8 @@ It is built with Golang-gRPC and Protobuf. Its providers are requested using RES
 
 # Highlights
 1. Protobuf - libprotoc 25.3
+2. Here Maps
+3. Open mateo
 
 # FAQ
 1. Install Go - brew install golang
@@ -26,4 +28,5 @@ It is built with Golang-gRPC and Protobuf. Its providers are requested using RES
       * Open a new project and create .kproj file
       * Import proto files from your service in kreya.
       * Form the request and hit send.
+9. How to create Here Maps API Key : https://www.here.com/docs/bundle/geocoding-and-search-api-developer-guide/page/topics/quick-start.html#send-a-request
 

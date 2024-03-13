@@ -43,14 +43,30 @@ func (w *WeatherForecastServer) GetWeather(ctx context.Context, request *generat
 		return nil, err
 	}
 
-	temperature := fmt.Sprintf("%f", openMateoResponse.CurrentValues.Temperature) + " " + openMateoResponse.CurrentUnits.Temperature
-	timezone := openMateoResponse.TimeZone + " " + openMateoResponse.TimeZoneUnit
-	x := &generated.WeatherResponse{
-		Temperature: temperature,
-		Timezone:    timezone,
+	var conditions string
+	if openMateoResponse.CurrentValues.Rain != 0 {
+		transcript := "The current weather includes rainfall of  "
+		conditions = transcript + fmt.Sprintf("%f", openMateoResponse.CurrentValues.Rain) + openMateoResponse.CurrentUnits.Rain
+	}
+	if openMateoResponse.CurrentValues.Showers != 0 {
+		transcript := "The current weather includes showering of  "
+		conditions = transcript + fmt.Sprintf("%f", openMateoResponse.CurrentValues.Showers) + openMateoResponse.CurrentUnits.Showers
+	}
+	if openMateoResponse.CurrentValues.Snowfall != 0 {
+		transcript := "The current weather includes snowfall of  "
+		conditions = transcript + fmt.Sprintf("%f", openMateoResponse.CurrentValues.Snowfall) + openMateoResponse.CurrentUnits.Snowfall
 	}
 
-	return x, nil
+	temperature := fmt.Sprintf("%f", openMateoResponse.CurrentValues.Temperature) + openMateoResponse.CurrentUnits.Temperature
+	timezone := openMateoResponse.TimeZone + " " + openMateoResponse.TimeZoneUnit
+
+	weather := &generated.WeatherResponse{
+		Temperature: temperature,
+		Timezone:    timezone,
+		Condition:   conditions,
+	}
+
+	return weather, nil
 }
 
 type ServerOption func(*WeatherForecastServer)

@@ -65,8 +65,8 @@ func getWeatherServer(serverConfig *props.Server) weatherServices {
 
 	return weatherServices{
 		weatherServer: service.NewWeatherDomainHandler(providers,
-			service.WithHost(serverConfig.Host),
-			service.WithPort(serverConfig.Port),
+			//service.WithHost(serverConfig.Host),
+			//service.WithPort(serverConfig.Port),
 			service.WithPath(serverConfig.ContextRoot)),
 	}
 }
