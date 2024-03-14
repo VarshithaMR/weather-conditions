@@ -26,12 +26,12 @@ type OpenMateoClient interface {
 }
 
 type WeatherForecast struct {
-	httClient *resty.Client
+	httpClient *resty.Client
 }
 
 func (w *WeatherForecast) GetWeatherForecast(latLon heremaps.CoordinatesResponse) (*models.ForecastResponse, error) {
-	url := w.httClient.BaseURL + openMateoEndpoint
-	response, err := w.httClient.R().
+	url := w.httpClient.BaseURL + openMateoEndpoint
+	response, err := w.httpClient.R().
 		SetHeader(contentType, appType).
 		SetQueryParam(paramCurrent, paramCurrentValue).
 		SetQueryParam(paramLongitude, fmt.Sprintf("%f", latLon.Items[0].Position.Longitude)).
@@ -52,6 +52,6 @@ func NewOpenMateoClient(properties *viper.Viper) OpenMateoClient {
 	client.SetBaseURL(url)
 
 	return &WeatherForecast{
-		httClient: client,
+		httpClient: client,
 	}
 }
