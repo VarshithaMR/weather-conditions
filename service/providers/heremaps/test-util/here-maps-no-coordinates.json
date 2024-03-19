@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "title": "Berlin, Deutschland",
+      "id": "here:cm:namedplace:20187403",
+      "resultType": "locality",
+      "localityType": "city",
+      "address": {
+        "label": "Berlin, Deutschland",
+        "countryCode": "DEU",
+        "countryName": "Deutschland",
+        "stateCode": "BE",
+        "state": "Berlin",
+        "countyCode": "B",
+        "county": "Berlin",
+        "city": "Berlin",
+        "postalCode": "10117"
+      },
+      "position": {},
+      "mapView": {
+        "west": 13.08835,
+        "south": 52.33812,
+        "east": 13.761,
+        "north": 52.6755
+      },
+      "scoring": {
+        "queryScore": 1.0,
+        "fieldScore": {
+          "city": 1.0
+        }
+      }
+    }
+  ]
+}
