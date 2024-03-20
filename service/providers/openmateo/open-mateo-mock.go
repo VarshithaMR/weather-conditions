@@ -10,6 +10,6 @@ func OpenMateoMockClient(forecastClient *resty.Client) OpenMateoClient {
 	forecastClient.SetBaseURL(mockUrl)
 
 	return &WeatherForecast{
-		httClient: forecastClient,
+		httpClient: forecastClient,
 	}
 }

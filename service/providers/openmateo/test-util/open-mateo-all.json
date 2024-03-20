@@ -1,0 +1,27 @@
+{
+  "latitude": 48.58,
+  "longitude": 7.72,
+  "generationtime_ms": 0.06389617919921875,
+  "utc_offset_seconds": 0,
+  "timezone": "GMT",
+  "timezone_abbreviation": "GMT",
+  "elevation": 145.0,
+  "current_units": {
+    "time": "iso8601",
+    "interval": "seconds",
+    "temperature_2m": "°C",
+    "is_day": "",
+    "rain": "mm",
+    "showers": "mm",
+    "snowfall": "cm"
+  },
+  "current": {
+    "time": "2024-03-13T06:00",
+    "interval": 900,
+    "temperature_2m": 8.1,
+    "is_day": 1,
+    "rain": 5,
+    "showers": 1,
+    "snowfall": 1
+  }
+}
